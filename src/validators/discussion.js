@@ -7,6 +7,9 @@ module.exports = {
       .isString()
       .withMessage('Repository ID should be a string'),
   ],
+  postReportDiscussionComment: [
+    body('reason').isString().notEmpty().withMessage('Reason is required'),
+  ],
   postComment: [
     body('comment').isString().notEmpty().withMessage('Comment is required'),
     body('discussionId')

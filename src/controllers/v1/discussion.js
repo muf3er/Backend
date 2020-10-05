@@ -3,6 +3,7 @@ const User = require('../../models/User');
 const Discussion = require('../../models/Discussion');
 const DiscussionComment = require('../../models/DiscussionComment');
 const validators = require('../../validators/discussion');
+const ReportDiscussionComment = require('../../models/ReportDiscussionComment');
 
 module.exports = {
   getDiscussions: create(async (req, res) => {
@@ -106,6 +107,29 @@ module.exports = {
     {
       validation: {
         validators: validators.postComment,
+        throwError: true,
+      },
+    },
+  ),
+
+  postReportDiscussionComment: create(
+    async (req, res) => {
+      const { discussionId } = req.params;
+      const { reason, usedId, discussionCommentId } = req.body;
+
+      const newReportDiscussionComment = new ReportDiscussionComment({
+        reason,
+        usedId,
+        discussionCommentId,
+      });
+
+      const reportDiscussionComment = await newReportDiscussionComment.save();
+
+      res.json({ data: reportDiscussionComment });
+    },
+    {
+      validation: {
+        validators: validators.postReportDiscussionComment,
         throwError: true,
       },
     },

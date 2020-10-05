@@ -10,5 +10,10 @@ router.get('/:repoId', authenticator(), controller.getDiscussionByRepoId);
 router.get('/:discussion_id/comments', authenticator(), controller.getComments);
 router.post('/', authenticator(), controller.postDiscussion);
 router.post('/comment', authenticator(), controller.postComment);
+router.post(
+  '/:discussionId/comment/:commentId',
+  authenticator(),
+  controller.postComment,
+);
 
 module.exports = router;
